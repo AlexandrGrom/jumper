@@ -5,16 +5,14 @@ using UnityEngine;
 public class CameraFolow : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    private float lastPosition;
 
 
-    void Update()
+    void LateUpdate()
     {
-        if (player.position.y < lastPosition)
+        if (player.position.y > transform.position.x)
         {
-            return;
+            Vector3 newPosition = new Vector3(transform.position.x, player.position.y, transform.position.z);
+            transform.position = newPosition;
         }
-        transform.position = new Vector3(transform.position.x, player.position.y + 2, transform.position.z);
-        lastPosition = player.position.y;
     }
 }
