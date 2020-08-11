@@ -9,12 +9,10 @@ public class Platform : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Physics.IgnoreCollision(colision, other.GetComponent<Collider>(),true);
-        print("ontriggerentered");
     }
 
     private void OnTriggerExit(Collider other)
     {
         Physics.IgnoreCollision(colision, other.GetComponent<Collider>(),false);
-        print("ontriggerexit");
     }
 }
