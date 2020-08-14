@@ -11,7 +11,8 @@ public class CameraFolow : MonoBehaviour
     {
         if (player.position.y > transform.position.y)
         {
-            Vector3 newPosition = new Vector3(transform.position.x, player.position.y, transform.position.z);
+            //Vector3 newPosition = new Vector3(transform.position.x, player.position.y, transform.position.z);
+            Vector3 newPosition = new Vector3(transform.position.x, player.position.y, player.position.z - 10);
             transform.position = newPosition;
         }
     }

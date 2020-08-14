@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Animator animator;
     [SerializeField] private float jumpForce;
     [SerializeField] private float movementMultiplayer;
 
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        animator.SetTrigger("collided");
         Vector3 velocity = rb.velocity;
         rb.velocity = new Vector3(velocity.x,jumpForce,velocity.z);
     }

@@ -39,8 +39,8 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < maxCountInChunk; i++)
         {
-            Vector3 postion = transform.position + Vector3.up * step + Vector3.right * Random.Range(-3f,3f) + Vector3.forward * 0.5f;
-            step += Random.Range(1f,3f);
+            Vector3 postion = transform.position + Vector3.up * step + Vector3.right * Random.Range(-3f,3f);
+            step += Random.Range(3f,4f);
             platformsCank[i]=Instantiate(platform, postion, Quaternion.identity);
         } 
     }
@@ -61,7 +61,7 @@ public class LevelGenerator : MonoBehaviour
         }
         for (int i = start; i < end; i++)
         {
-            platformsCank[i].transform.position = transform.position + Vector3.up * step + Vector3.right * Random.Range(-3f, 3f) + Vector3.forward * 0.5f;
+            platformsCank[i].transform.position = transform.position + Vector3.up * step + Vector3.right * Random.Range(-3f, 3f) + Vector3.forward * 0;
             step += Random.Range(1f, 3f);
         }
         firstTime = !firstTime;
