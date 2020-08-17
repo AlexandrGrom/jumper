@@ -2,7 +2,6 @@
 
 public class HorizontalMovingPlatform : Platform
 {
-    [SerializeField] private float jumpForce;
 
     private float randomnes;
     private Vector3 startPosition;
@@ -29,7 +28,7 @@ public class HorizontalMovingPlatform : Platform
 
     protected override void OnCollisionPlatformBehaviour(Player player)
     {
-        player.GiveForce(jumpForce);
+        base.OnCollisionPlatformBehaviour(player);
     }
 
     public override void Reinitialize(Vector3 newPosition)

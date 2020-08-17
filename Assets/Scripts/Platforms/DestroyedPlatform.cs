@@ -2,16 +2,13 @@
 
 public class DestroyedPlatform : Platform
 {
-
-    [SerializeField] Rigidbody rigidbody;
-    [SerializeField] private float jumpForce;
-
+    [SerializeField] private Rigidbody rigidbody;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent(out Player player))
         {
-            OnCollisionPlatformBehaviour(player);
+            base.OnCollisionPlatformBehaviour(player);
             rigidbody.constraints = ~RigidbodyConstraints.FreezeAll;
         }
     }

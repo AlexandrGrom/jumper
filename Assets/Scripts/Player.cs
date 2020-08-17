@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         Vector3 velocity = rb.velocity;
         rb.velocity = new Vector3(movement * movementMultiplayer, velocity.y, velocity.z);
     }

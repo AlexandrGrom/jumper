@@ -77,6 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colision: {fileID: 5809800362241592891}
   jumpForce: 10
+  amoun: 1
 --- !u!1 &5809800362241592888
 GameObject:
   m_ObjectHideFlags: 0

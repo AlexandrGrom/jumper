@@ -76,8 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colision: {fileID: 5809800362241592891}
-  rigidbody: {fileID: 6543587958529253715}
   jumpForce: 10
+  amoun: 1
+  rigidbody: {fileID: 6543587958529253715}
 --- !u!1 &5809800362241592888
 GameObject:
   m_ObjectHideFlags: 0

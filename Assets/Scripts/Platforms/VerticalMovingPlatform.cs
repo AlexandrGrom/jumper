@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class VerticalMovingPlatform : Platform
 {
-    [SerializeField] private float jumpForce;
-
     private float randomnes;
     private Vector3 startPosition;
     void Awake()
@@ -31,7 +29,7 @@ public class VerticalMovingPlatform : Platform
 
     protected override void OnCollisionPlatformBehaviour(Player player)
     {
-        player.GiveForce(jumpForce);
+        base.OnCollisionPlatformBehaviour(player);
     }
 
     public override void Reinitialize(Vector3 newPosition)
