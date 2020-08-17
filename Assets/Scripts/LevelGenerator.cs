@@ -3,35 +3,39 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject platform;
+    [SerializeField] private Platform[] platformPrefabs;
     [SerializeField] private Transform player;
     [SerializeField] private int maxCountInChunk = 20;
 
-    private GameObject[] platformsCank;
+    private Platform[] platformsCank;
 
-    private float step = 0;
-    private bool firstTime;
-    private int halfOfHalf;
+    private Vector3 Position => transform.position + Vector3.up * (step += Random.Range(1.5f, 3f)) + Vector3.right * Random.Range(-3f, 3f);
+
+    private float step;
+    private bool firstPart;
+    private int quarter;
 
     void Awake()
     {
-        halfOfHalf = maxCountInChunk / 4;
-        platformsCank = new GameObject[maxCountInChunk];
+        step = 0;
+        quarter = maxCountInChunk / 4;
+        platformsCank = new Platform[maxCountInChunk];
         GenerateChank();
+        StartCoroutine(CheckRecalculation());
     }
 
-
-    private void Update()
+    private IEnumerator CheckRecalculation()
     {
-        int idx;
-        idx = maxCountInChunk / 2 + (firstTime ? -halfOfHalf : halfOfHalf);
-
-        if (player.position.y > platformsCank[idx].transform.position.y)
+        while (true)
         {
-       // if (Input.GetKeyDown(KeyCode.K))
-        //{
-            RecalculateHalfOfChunk(firstTime);
-        //}
+            yield return new WaitForSeconds(1);
+            int index = maxCountInChunk / 2 + (firstPart ? -quarter : quarter);
+
+            if (player.position.y > platformsCank[index].transform.position.y)
+            {
+                RecalculateHalfOfChunk(firstPart);
+            }
+
         }
     }
 
@@ -39,9 +43,7 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < maxCountInChunk; i++)
         {
-            Vector3 postion = transform.position + Vector3.up * step + Vector3.right * Random.Range(-3f,3f);
-            step += Random.Range(3f,4f);
-            platformsCank[i]=Instantiate(platform, postion, Quaternion.identity);
+            platformsCank[i]=Instantiate(platformPrefabs[Random.Range(0,platformPrefabs.Length)], Position, Quaternion.identity, gameObject.transform);
         } 
     }
 
@@ -59,11 +61,13 @@ public class LevelGenerator : MonoBehaviour
             start = maxCountInChunk / 2;
             end = maxCountInChunk;
         }
+
         for (int i = start; i < end; i++)
         {
-            platformsCank[i].transform.position = transform.position + Vector3.up * step + Vector3.right * Random.Range(-3f, 3f) + Vector3.forward * 0;
-            step += Random.Range(1f, 3f);
+            Vector3 newPosition = Position;
+            platformsCank[i].Reinitialize(newPosition);
+            platformsCank[i].transform.position = newPosition;
         }
-        firstTime = !firstTime;
+        this.firstPart = !this.firstPart;
     }
 }
