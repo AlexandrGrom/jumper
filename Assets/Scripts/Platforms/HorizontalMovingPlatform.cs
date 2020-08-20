@@ -14,6 +14,8 @@ public class HorizontalMovingPlatform : Platform
 
     void Update()
     {
+        if (GameStateManager.CurrentState == GameState.Lose) return;
+
         float floatingValue = Mathf.Sin(Time.time + randomnes) * 2;
         transform.position = new Vector3(startPosition.x + floatingValue,startPosition.y,startPosition.z);
     }

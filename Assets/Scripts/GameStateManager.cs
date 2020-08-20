@@ -14,7 +14,7 @@ public class GameStateManager
             if (currentState == value) return;
 
             currentState = value;
-            OnGameStateChange.Invoke(currentState);
+            OnGameStateChange?.Invoke(currentState);
 
         }
     }

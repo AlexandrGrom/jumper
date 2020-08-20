@@ -7,21 +7,22 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float movementMultiplayer;
 
+    [SerializeField] private ParticleSystem collisionParticle;
+
     private float movement;
 
-
+    void Awake()
+    {
+        GameStateManager.OnGameStateChange += OnameStateChange;
+    }
     public void GiveForce(float jumpForce)
     {
         animator.SetTrigger("collided");
         Vector3 velocity = rb.velocity;
         rb.velocity = new Vector3(velocity.x,jumpForce,velocity.z);
-
-
-        //PlayerPrefs.SetInt("NameOfFile", currentScore);
-        //currentScore = PlayerPrefs.GetInt("NameOfFile");
+        collisionParticle.transform.position = transform.position + Vector3.down * 0.5f;
+        collisionParticle.Play();
     }
-
-
 
 
     Vector3 startPosition;
@@ -46,13 +47,30 @@ public class Player : MonoBehaviour
         }
         movement = Mathf.Lerp(movement, 0, Time.deltaTime);
 
-       // movement = Input.GetAxis("Horizontal");
     }
 
     void FixedUpdate()
     {
-        
         Vector3 velocity = rb.velocity;
         rb.velocity = new Vector3(movement * movementMultiplayer, velocity.y, velocity.z);
+    }
+
+    private void OnameStateChange(GameState state)
+    {
+        if (state == GameState.Lose)
+        {
+            OnLose();
+        }
+    }
+
+    private void OnLose()
+    {
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
+    }
+
+    void OnDestroy()
+    {
+        GameStateManager.OnGameStateChange -= OnameStateChange;
     }
 }

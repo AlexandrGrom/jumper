@@ -15,6 +15,8 @@ public class VerticalMovingPlatform : Platform
 
     void Update()
     {
+        if (GameStateManager.CurrentState == GameState.Lose) return;
+
         float floatingValue = Mathf.Sin(Time.time + randomnes);
         transform.position = new Vector3(startPosition.x , startPosition.y + floatingValue, startPosition.z);
     }

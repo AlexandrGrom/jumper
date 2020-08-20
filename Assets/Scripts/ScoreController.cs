@@ -8,13 +8,15 @@ public class ScoreController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentScoreText;
 
     private int bestScore;
-    private int currentScore;
+
+    public static int CurrentScore { get; private set; }
 
 
     public static OnScoreUpdate onScoreUpdate;
     
     void Awake()
     {
+        CurrentScore = 0;
         onScoreUpdate += UpdateUI;
 
         bestScore = PlayerPrefs.GetInt(SaveKeys.BestScore);
@@ -23,11 +25,11 @@ public class ScoreController : MonoBehaviour
 
     private void UpdateUI(int amount)
     {
-        currentScore += amount;
-        if (currentScore > bestScore)
-            PlayerPrefs.SetInt(SaveKeys.BestScore, currentScore);
+        CurrentScore += amount;
+        if (CurrentScore > bestScore)
+            PlayerPrefs.SetInt(SaveKeys.BestScore, CurrentScore);
         
-        currentScoreText.text = currentScore.ToString();
+        currentScoreText.text = CurrentScore.ToString();
     }
 
 
