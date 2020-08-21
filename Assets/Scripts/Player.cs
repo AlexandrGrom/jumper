@@ -57,16 +57,26 @@ public class Player : MonoBehaviour
 
     private void OnameStateChange(GameState state)
     {
+        rb.constraints = ~(RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY);
+
         if (state == GameState.Lose)
         {
             OnLose();
+        }
+        else if (state == GameState.Paues)
+        {
+            OnPause();
         }
     }
 
     private void OnLose()
     {
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
+    }
 
+    private void OnPause()
+    {
+        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY;
     }
 
     void OnDestroy()

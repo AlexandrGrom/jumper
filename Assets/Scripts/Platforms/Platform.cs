@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
@@ -8,6 +6,24 @@ public class Platform : MonoBehaviour
     [SerializeField] private Collider colision;
     [SerializeField] protected float jumpForce;
     [SerializeField] protected int amoun;
+
+    protected bool isAction = true;
+
+    void Awake()
+    {
+        OnStartGame();
+    }
+
+    protected virtual void OnStartGame()
+    {
+        GameStateManager.OnGameStateChange += OnGamestateChange;
+    }
+
+    void OnGamestateChange(GameState state)
+    {
+        if (state == GameState.Game) isAction = true;
+        else isAction = false;
+    }
     void OnTriggerEnter(Collider other)
     {
         Physics.IgnoreCollision(colision, other.GetComponent<Collider>(),true);
@@ -24,4 +40,9 @@ public class Platform : MonoBehaviour
         ScoreController.onScoreUpdate.Invoke(amoun);
     }
     public virtual void Reinitialize(Vector3 newPosition){}
+
+    void OnDestroy()
+    {
+        GameStateManager.OnGameStateChange -= OnGamestateChange;
+    }
 }

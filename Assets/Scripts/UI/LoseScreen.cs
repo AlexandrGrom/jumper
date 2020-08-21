@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoseScreen : MonoBehaviour
+public class LoseScreen : ScreenBase
 {
     [Header ("Panel")]
     [SerializeField] private Image panel;
@@ -18,6 +19,7 @@ public class LoseScreen : MonoBehaviour
     [SerializeField] private Image bestScore;
     [SerializeField] private Image youScore;
     [SerializeField] private TextMeshProUGUI youScoreText;
+    [SerializeField] private TextMeshProUGUI bestScoreText;
     [SerializeField] private AnimationCurve scoreEase;
 
 
@@ -31,10 +33,16 @@ public class LoseScreen : MonoBehaviour
     private void ResetAll()
     {
         youScoreText.text = "0";
+        bestScoreText.text = "0";
         panel.transform.localScale = Vector3.zero;
         bestScore.transform.localScale = Vector3.zero;
         youScore.transform.localScale = Vector3.zero;
         gameOverText.transform.localScale = new Vector3(0,1,1);
+    }
+
+    public void RestartGame()
+    {        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private IEnumerator LoseScreenAnimation()
@@ -58,15 +66,22 @@ public class LoseScreen : MonoBehaviour
             yield return null;
         }
 
+        int best = PlayerPrefs.GetInt(SaveKeys.BestScore);
+        for (float i = 0; i <= 1; i += 0.05f)
+        {
+            bestScoreText.text = Mathf.RoundToInt(best * i).ToString();
+            yield return null;
+        }
+        bestScoreText.text = best.ToString();
 
         int earnedScore = ScoreController.CurrentScore;
-        earnedScore = 532;
         for (float i = 0; i <= 1; i += 0.05f)
         {
             youScoreText.text = Mathf.RoundToInt(earnedScore * i).ToString();
             yield return null;
         }
         youScoreText.text = earnedScore.ToString();
+
 
 
     }

@@ -23,6 +23,6 @@ public enum GameState
 {
     Game,
     Lose,
-    Win,
+    Paues,
 }
 
